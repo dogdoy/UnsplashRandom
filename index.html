@@ -29,39 +29,53 @@
     top: 15px;
     right: 15px;
     z-index: 10;
-    opacity: 0.5;
+    opacity: 0.1;
     color: #FFF;
+    transition: opacity 0.5s ease;
+  }
+  #control:hover{
+      opacity: 0.8; 
   }
   #keyword{
     width: 100px;
   }
+  #fullscreen{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    opacity: 0.4;
+  }    
   </style>
 </head>
 <body>
-<div id="photo">
-  <img src="">
-</div>
-<div id="control">
-  <form class="form-inline">
-  <div class="form-group">
-    <label for="keyword">Keywords: </label>
-  <input type="text" id="keyword" class="form-control" name="keyword" value="portrait">
-  <button id="nextPhoto" class="btn btn-primary">Random</button>
+  <div id="wrapper">
+    <div id="photo">
+      <img src="">
     </div>
-  </form>
-  <div class="form-group">
-    <label>Display:</label>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="displayContain" value="contain" checked="checked">
-  <label class="form-check-label" for="inlineRadio1">contain</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="displayCover" value="cover">
-  <label class="form-check-label" for="inlineRadio2">cover</label>
-</div>
-   </div>
-</div>
+    <div id="control">
+      <form class="form-inline">
+      <div class="form-group">
+        <label for="keyword">Keywords: </label>
+      <input type="text" id="keyword" class="form-control" name="keyword" value="portrait">
+      <button id="nextPhoto" class="btn btn-primary">Random</button>
+        </div>
+      </form>
+      <div class="form-group">
+        <label>Display:</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="displayContain" value="contain" checked="checked">
+          <label class="form-check-label" for="inlineRadio1">contain</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="displayCover" value="cover">
+          <label class="form-check-label" for="inlineRadio2">cover</label>
+        </div>
+       </div>
+    </div>
+    <div id="fullscreen"><button onclick="openFullscreen()" class="btn btn-sm btn-secondary">Fullscreen</button>
+    </div>
 
+  </div>
 <script>
 // get random photo from Unsplash api
 var unsplashAPI = 'https://source.unsplash.com/featured?' + $("#keyword").val();
@@ -81,6 +95,18 @@ $("#displayCover").on("click", function(){
   $("#photo").addClass("cover");
 });
 
+var elem = document.getElementById("wrapper");
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+}  
 </script>
 
 </body>
