@@ -24,6 +24,10 @@
   #photo.cover img{
     object-fit: cover;
   }
+  #photo.bw img{
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+  }    
   #control{
     position: fixed;
     top: 15px;
@@ -71,43 +75,61 @@
           <label class="form-check-label" for="inlineRadio2">cover</label>
         </div>
        </div>
+       <div class="form-group">
+         <label>Color:</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="colorOptions" id="colorColor" value="contain" checked="checked">
+            <label class="form-check-label" for="colorColor">Color</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="colorOptions" id="colorBW" value="cover">
+            <label class="form-check-label" for="colorBW">Black&White</label>
+          </div>
+       </div>  
     </div>
     <div id="fullscreen"><button onclick="openFullscreen()" class="btn btn-sm btn-secondary">Fullscreen</button>
     </div>
 
   </div>
-<script>
-// get random photo from Unsplash api
-var unsplashAPI = 'https://source.unsplash.com/featured?' + $("#keyword").val();
+  <script>
+    // get random photo from Unsplash api
+    var unsplashAPI = 'https://source.unsplash.com/featured?' + $("#keyword").val();
 
-$("#photo img").attr("src", unsplashAPI);
+    $("#photo img").attr("src", unsplashAPI);
 
-$("#nextPhoto").on("click", function(e){
-  e.preventDefault();
-  unsplashAPI = 'https://source.unsplash.com/featured?' + $("#keyword").val() +'&'+(Math.floor(Math.random() * 999999));
-  $("#photo img").attr("src", unsplashAPI );
-});
+    $("#nextPhoto").on("click", function(e){
+      e.preventDefault();
+      unsplashAPI = 'https://source.unsplash.com/featured?' + $("#keyword").val() +'&'+(Math.floor(Math.random() * 999999));
+        $("#photo img").attr("src", unsplashAPI );
+    });
 
-$("#displayContain").on("click", function(){
-  $("#photo").removeClass("cover");
-});
-$("#displayCover").on("click", function(){
-  $("#photo").addClass("cover");
-});
+    $("#displayContain").on("click", function(){
+      $("#photo").removeClass("cover");
+    });
+    $("#displayCover").on("click", function(){
+      $("#photo").addClass("cover");
+    });
 
-var elem = document.getElementById("wrapper");
-function openFullscreen() {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) { /* Firefox */
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    elem.msRequestFullscreen();
-  }
-}  
-</script>
+    $("#colorColor").on("click", function(){
+      $("#photo").removeClass("bw");
+    });
+    $("#colorBW").on("click", function(){
+      $("#photo").addClass("bw");
+    });
+
+    var elem = document.getElementById("wrapper");
+    function openFullscreen() {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+      }
+    }
+  </script>
 
 </body>
 </html>
