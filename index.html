@@ -7,56 +7,94 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <style>
-  #photo{
-    width: 100vw;
-    height: 100vh;
-    background-color: black;
-  }
-  #photo img{
-    display: block;
-    object-fit: contain;
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    transition: all 0.5s ease;
-  }
-  #photo.cover img{
-    object-fit: cover;
-  }
-  #photo.bw img{
-    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-    filter: grayscale(100%);
-  }    
-  #control{
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 10;
-    opacity: 0.1;
-    color: #FFF;
-    transition: opacity 0.5s ease;
-  }
-  #control:hover{
-      opacity: 0.8; 
-  }
-  #keyword{
-    width: 100px;
-  }
-  #fullscreen{
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    opacity: 0.4;
-  }    
+    #photo{
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+    }
+
+    #photo img{
+      display: block;
+      object-fit: contain;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      transition: all 0.5s ease;
+    }
+
+    #photo.cover img{
+      object-fit: cover;
+    }
+
+    #photo.bw img{
+      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(100%);
+    }
+
+    #control{
+      position: fixed;
+      top: 15px;
+      right: -306px;
+      z-index: 10;
+      opacity: 0.3;
+      color: #000;
+      transition: all 0.8s ease;
+      width: 306px;
+      background: rgba(255,255,255,0.8);
+      padding: 8px 10px;
+      border-radius: 5px 5px;
+    }
+    #control.show-control{
+      right: 15px;
+      opacity: 1;
+    }
+    #control:hover{
+      opacity: 1;
+    }
+    #open-close{
+      position: absolute;
+      left: -30px;
+      top: 0;
+      cursor: pointer;
+    }
+
+    #keyword{
+      width: 100px;
+    }
+
+    .form-group{
+      margin: 0;
+    }
+
+    #fullscreen{
+      position: fixed;
+      bottom: 5px;
+      right: 5px;
+      opacity: 0.2;
+    }
+
+    #wrapper:fullscreen #fullscreen{
+      display: none;
+    }
+
+    #wrapper:-moz-full-screen #fullscreen {
+      display: none;
+    }
+
+    #wrapper:-webkit-full-screen #fullscreen {
+      display: none;
+    } 
   </style>
 </head>
 <body>
   <div id="wrapper">
+
     <div id="photo">
       <img src="">
     </div>
     <div id="control">
+      <div id="open-close" title="Open/Close Option panel">⚙️</div>
       <form class="form-inline">
       <div class="form-group">
         <label for="keyword">Keywords: </label>
@@ -64,42 +102,57 @@
       <button id="nextPhoto" class="btn btn-primary">Random</button>
         </div>
       </form>
+     <div class="form-group">
+        <label>Select:</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="featured" id="radioRandom" value="random" checked="checked">
+          <label class="form-check-label" for="radioRandom">Random</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="featured" id="radioFeatured" value="featured">
+          <label class="form-check-label" for="radioFeatured">Featured</label>
+        </div>
+       </div> 
+
       <div class="form-group">
         <label>Display:</label>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="displayContain" value="contain" checked="checked">
-          <label class="form-check-label" for="inlineRadio1">contain</label>
+          <label class="form-check-label" for="displayContain">Full image</label>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="displayCover" value="cover">
-          <label class="form-check-label" for="inlineRadio2">cover</label>
+          <label class="form-check-label" for="displayCover">Fill screen</label>
         </div>
        </div>
-       <div class="form-group">
-         <label>Color:</label>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="colorOptions" id="colorColor" value="contain" checked="checked">
-            <label class="form-check-label" for="colorColor">Color</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="colorOptions" id="colorBW" value="cover">
-            <label class="form-check-label" for="colorBW">Black&White</label>
-          </div>
+
+
+      <div class="form-group">
+        <label>Color:</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="colorOptions" id="colorColor" value="contain" checked="checked">
+          <label class="form-check-label" for="colorColor">Color</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="colorOptions" id="colorBW" value="cover">
+          <label class="form-check-label" for="colorBW">Black&White</label>
+        </div>
        </div>  
     </div>
+
     <div id="fullscreen"><button onclick="openFullscreen()" class="btn btn-sm btn-secondary">Fullscreen</button>
     </div>
 
   </div>
   <script>
     // get random photo from Unsplash api
-    var unsplashAPI = 'https://source.unsplash.com/featured?' + $("#keyword").val();
+    var unsplashAPI = 'https://source.unsplash.com/'+ $("input[name=featured]").val() +'?' + $("#keyword").val();
 
     $("#photo img").attr("src", unsplashAPI);
 
     $("#nextPhoto").on("click", function(e){
       e.preventDefault();
-      unsplashAPI = 'https://source.unsplash.com/featured?' + $("#keyword").val() +'&'+(Math.floor(Math.random() * 999999));
+      unsplashAPI = 'https://source.unsplash.com/'+ $("input[name=featured]").val() +'?' + $("#keyword").val() + '&'+(Math.floor(Math.random() * 999999));
         $("#photo img").attr("src", unsplashAPI );
     });
 
@@ -117,6 +170,10 @@
       $("#photo").addClass("bw");
     });
 
+    $("#open-close").on("click", function(){
+      $("#control").toggleClass("show-control");
+    });
+
     var elem = document.getElementById("wrapper");
     function openFullscreen() {
       if (elem.requestFullscreen) {
@@ -129,13 +186,13 @@
         elem.msRequestFullscreen();
       }
     }
-    
+
     $('body').keyup(function(e){
        if(e.keyCode == 32){
            // user has pressed space
            $("#nextPhoto").trigger("click");
        }
-    });    
+    }); 
   </script>
 
 </body>
